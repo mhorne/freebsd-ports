@@ -136,7 +136,10 @@ REMOVE_FILES=	bin/chfn bin/chsh bin/findmnt bin/login bin/lsblk bin/lscpu \
 
 .if ${OPSYS} == FreeBSD && ${OSVERSION} < 1300077
 GLIBC_VER=	2.17-292.el7
-MASTER_SITE_SUBDIR+=	centos/7.7.1908/os/x86_64/Packages/:DEFAULT,amd64 \
+MASTER_SITE_SUBDIR+=	
+MASTER_SITE_SUBDIR+=	altarch/7.7.1908/os/aarch64/Packages/:DEFAULT,aarch64 \
+			altarch/7.7.1908/updates/aarch64/Packages/:DEFAULT,aarch64 \
+			centos/7.7.1908/os/x86_64/Packages/:DEFAULT,amd64 \
 			centos/7.7.1908/updates/x86_64/Packages/:DEFAULT,amd64 \
 			altarch/7.7.1908/os/i386/Packages/:DEFAULT,i386 \
 			altarch/7.7.1908/updates/i386/Packages/:DEFAULT,i386 \
@@ -167,7 +170,7 @@ post-extract:
 		${EXTRACT_AFTER_ARGS})
 .if ${ARCH} == i386
 	@${CHMOD} u+w ${WRKSRC}/usr/lib/pm-utils
-.elif ${ARCH} == amd64
+.elif ${ARCH} == amd64 || ${ARCH} == aarch64
 	@${CHMOD} u+w ${WRKSRC}/usr/lib64/pm-utils
 .endif
 
@@ -176,7 +179,7 @@ post-patch:
 	@${RM} ${REMOVE_FILES:S|^|${WRKSRC}/|}
 	@${FIND} ${WRKSRC}/usr -type d -empty -not -path '*/lib*/gio/*' -delete
 	@${BRANDELF} -t Linux ${WRKSRC}/usr/lib/ld-2.17.so
-.if ${ARCH} == amd64
+.if ${ARCH} == amd64 || ${ARCH} == aarch64
 	@${BRANDELF} -t Linux ${WRKSRC}/usr/lib64/ld-2.17.so
 .endif
 
