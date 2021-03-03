@@ -1,22 +1,21 @@
 # $FreeBSD$
 
 PORTNAME=	texlive
-PORTVERSION=	20150523
-PORTREVISION=	4
+PORTVERSION=	20200406
 CATEGORIES=	print
-MASTER_SITES=	ftp://ftp.tug.org/historic/systems/texlive/2015/:texmf \
+MASTER_SITES=	ftp://ftp.tug.org/historic/systems/texlive/2020/:texmf \
 		LOCAL/hrs:latex
 PKGNAMESUFFIX=	-texmf
 DISTFILES=	${PORTNAME}-${PORTVERSION}${PKGNAMESUFFIX}${EXTRACT_SUFX}:texmf \
-		latex-base-20150101.2${EXTRACT_SUFX}:latex
+		latex-base-20200327${EXTRACT_SUFX}:latex
 DIST_SUBDIR=	TeX
-EXTRACT_ONLY=	latex-base-20150101.2${EXTRACT_SUFX}
+EXTRACT_ONLY=	latex-base-20200327${EXTRACT_SUFX}
 
 MAINTAINER=	hrs@FreeBSD.org
 COMMENT=	TeX Live Typesetting System, texmf Tree
 
-CONFLICTS_INSTALL=	texlive-base-201[234]* \
-			texlive-texmf-201[234]*
+CONFLICTS_INSTALL=	texlive-base-201[2345]* \
+			texlive-texmf-201[2345]*
 
 USES=		python:run shebangfix tar:xz
 USE_TEX=	basic:extract base tlmgr:run texhash
@@ -256,7 +255,7 @@ EXCLUDE_FILES=	\*/doc/man \
 EXTRACT_AFTER_ARGS=| ${TAR} xf - ${EXCLUDE_FILES:S,^,--exclude ${PORTNAME}-${PORTVERSION}${PKGNAMESUFFIX}/,}
 
 post-extract:
-	cd ${WRKSRC}/latex-base-20150101.2 && \
+	cd ${WRKSRC}/latex-base-20200327 && \
 	    ${SETENV} TEXMF=. ${LOCALBASE}/bin/tex -ini unpack.ins && \
 	    ${RM} README *.log *.aux *.pdf *.dtx *.ins *.txt *.ist *.fdd *.err
 
@@ -265,7 +264,7 @@ do-install:
 		${EXTRACT_AFTER_ARGS} -C ${STAGEDIR}${PREFIX}/share \
 		--strip-components 1 --no-same-permission --no-same-owner
 	${MKDIR} ${STAGEDIR}${PREFIX}/${TEXMFDISTDIR}/tex/latex/base
-	cd ${WRKSRC}/latex-base-20150101.2 && ${PAX} -rw . \
+	cd ${WRKSRC}/latex-base-20200327 && ${PAX} -rw . \
 	    ${STAGEDIR}${PREFIX}/${TEXMFDISTDIR}/tex/latex/base
 	${REINPLACE_CMD} -i '' 's/\\def\\magyar@sugg@ie@low#1#2#3/\\def\\magyar@sugg@ie@low\\protect #1#2#3/' ${STAGEDIR}${PREFIX}/share/texmf-dist/tex/generic/babel-hungarian/magyar.ldf
 	${MKDIR} ${STAGEDIR}${PREFIX}/${TEXMFDISTDIR}/doc

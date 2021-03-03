@@ -1,15 +1,15 @@
 # $FreeBSD$
 
 PORTNAME=	texlive
-DISTVERSION=	20150521
+DISTVERSION=	20200327
 CATEGORIES=	print
 PKGNAMESUFFIX=	-full
 
 MAINTAINER=	hrs@FreeBSD.org
 COMMENT=	TeX Live, Full Version
 
-USE_TEX=	full texhash
 USES=		metaport
+USE_TEX=	full texhash
 
 OPTIONS_DEFINE=	DOCS SOURCE
 

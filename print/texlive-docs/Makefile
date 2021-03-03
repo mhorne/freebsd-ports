@@ -1,9 +1,9 @@
 # $FreeBSD$
 
 PORTNAME=	texlive
-PORTVERSION=	20150523
+PORTVERSION=	20200406
 CATEGORIES=	print
-MASTER_SITES=	ftp://ftp.tug.org/historic/systems/texlive/2015/
+MASTER_SITES=	ftp://ftp.tug.org/historic/systems/texlive/2020/
 PKGNAMESUFFIX=	-docs
 DISTNAME=	${PORTNAME}-${PORTVERSION}-texmf
 DIST_SUBDIR=	TeX
